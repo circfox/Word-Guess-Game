@@ -4,15 +4,15 @@ $(document).ready(function () {
 //References to DOM elements
 var spin = document.getElementById("spin");
 //var category = document.getElementById("category");
-//var placeHolder = document.getElementById("placeholder");
+var placeHolder = document.getElementById("placeholder");
 var guessesLeft = document.getElementById("guesses-left");
-var incorrectLetters = document.getElementById("incorrect-letters");
+var incorrectLetters = document.getElementById("guessed-letters");
 var wins = document.getElementById("wins");
 var losses = document.getElementById("losses");
 
 //Create variables
 
-var gameRunning = false;
+var gameOn = false;
 var guessesLeft = 7;
 var wins = 0;
 var losses = 0;
@@ -39,16 +39,17 @@ d = ["Journey", "Styx", "Loggins and Messina", "Earth Wind and Fire", "Nirvana",
 function Spin() {
 
     //Reset everything
-    gameRunning = true;
+    gameOn = true;
     chosenCategory = '';
     chosenWord = ''
     guessesLeft = 7;
-    wordElement = [];
+    guessedLetters = [];
+    IncorrectLetters = [];
     placeHolder = [];
     category = [];
     chosenWordPlaceholder = [];
-
-    var categories = ["Tropical Fruits", "Phrases", "Books Of The Bible", "American Bands"];
+    
+    //var categories = ["Tropical Fruits", "Phrases", "Books Of The Bible", "American Bands"];
 
     chosenCategory = categories[Math.floor(Math.random() * categories.length)];
     console.log(chosenCategory);
@@ -59,7 +60,6 @@ function Spin() {
         var wordElement = document.createTextNode("p");
         wordElement.textContent = chosenCategory[i];
         category.appendChild(wordElement);
-        //placeholder.textContent =wordElement;
     }
 
     if ((chosenCategory == "Tropical Fruits") && (chosenCategory != "Books Of The Bible") && (chosenCategory != "American Bands") && (chosenCategory != "Phrases")) {
@@ -84,8 +84,10 @@ function Spin() {
         chosenCategory = "Phrases";
         var chosenWord = b[Math.floor(Math.random() * b.length)];
         console.log(chosenWord);
+        
     }
     //push chosen word placeholder
+    
     for (var i = 0; i < chosenWord.length; i++) {
         // put them in a string
         if (chosenWord[i] === " ") {
@@ -103,10 +105,11 @@ function Spin() {
     }
     console.log(chosenWord.length);
     console.log(chosenWordPlaceholder);
+    console.log(gameOn);
+    
 
-   
+    //Create placeholder for guess word
 
-    //Create placeholder for chosen word
     var placeHolder = document.getElementById("placeholder");
     for (var i = 0; i < chosenWordPlaceholder.length; i++) {
         var wordElement = document.createTextNode(' ');
@@ -114,18 +117,54 @@ function Spin() {
         placeHolder.appendChild(wordElement);
         //placeholder.textContent =wordElement;
     }
-    ////   chosenWordPlaceholder.forEach(add);
+} console.log(chosenWord.length);
+console.log(chosenWord);
+//}
+//Match the letters of the guess word
+console.log(gameOn);
+function letterGuess(letter) {
+console.log(letter);
+console.log(chosenWord.length);
+console.log(guessedLetters);
+    if (gameOn == true && guessedLetters.indexOf(letter) == -1) {
+
+        guessedLetters.push(letter);
+        for (var i = 0; i < chosenWord.length; i++) {
+
+            if (chosenWord[i].toLowerCase() === letter.toLowerCase()) {
+
+                chosenWordPlaceholder[i] = chosenWord[i];
+                for (var i = 0; i < chosenWordPlaceholder.length; i++) {
+                    var wordElement = document.createTextNode(' ');
+                    wordElement.textContent = chosenWordPlaceholder[i];
+                    placeHolder.appendChild(wordElement);
+                }
+            }
+        }
+
+
+
+       // placeHolder.textContent = chosenWordPlaceholder.join[''];
+
+    }
+
+    else {
+        if (!gameOn) {
+            alert("Game is Off! Click Spin to start a new game.");
+        } else {
+            alert("Try a new letter.");
+        }
+        //console.log(letter);
+    }
 }
 
 
-//var word = document.createElement("p");
-//placeHolder.textContent = chosenWordPlaceholder[i];
+document.onkeyup = function (event) {
+   if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 65 && event.keyCode <= 90)) {
+       letterGuess(event.key);
+        gameOn = true;
+        console.log(gameOn);
+    }
+}
 
-//placeholder.appendChild(word);
-
-//console.log(worldElement);
-//console.log(placeHolder);
-
-//placeHolder.textContent = chosenWordPlaceholder.join('');
-
-//console.log(placeHolder.textContent);
+//console.log(chosenWordPlaceholder);   
