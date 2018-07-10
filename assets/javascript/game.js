@@ -41,20 +41,22 @@ function Spin() {
     //Reset everything
     gameOn = true;
     chosenCategory = '';
-    chosenWord = ''
+    chosenWord = '';
     guessesLeft = 7;
     guessedLetters = [];
     IncorrectLetters = [];
     placeHolder = [];
-    category = [];
+    category = "";
     chosenWordPlaceholder = [];
-    
-    //var categories = ["Tropical Fruits", "Phrases", "Books Of The Bible", "American Bands"];
 
+
+    // Chooses Category at random.
     chosenCategory = categories[Math.floor(Math.random() * categories.length)];
     console.log(chosenCategory);
     //alert(chosenCategory);
-    category = [];
+    category = "";
+
+    // Add category to HTML file.
     var category = document.getElementById("category");
     for (var i = 0; i < chosenCategory.length; i++) {
         var wordElement = document.createTextNode("p");
@@ -62,32 +64,34 @@ function Spin() {
         category.appendChild(wordElement);
     }
 
+
+    // Based on chosen category, we choose word.
     if ((chosenCategory == "Tropical Fruits") && (chosenCategory != "Books Of The Bible") && (chosenCategory != "American Bands") && (chosenCategory != "Phrases")) {
         chosenCategory = "Tropical Fruits";
-        var chosenWord = a[Math.floor(Math.random() * a.length)];
+        chosenWord = a[Math.floor(Math.random() * a.length)];
         console.log(chosenWord);
     }
 
     if ((chosenCategory == "Books Of The Bible") && (chosenCategory != "Tropical Fruits") && (chosenCategory != "American Bands") && (chosenCategory != "Phrases")) {
         chosenCategory = "Books Of The Bible";
-        var chosenWord = c[Math.floor(Math.random() * c.length)];
+        chosenWord = c[Math.floor(Math.random() * c.length)];
         console.log(chosenWord);
     }
 
     if ((chosenCategory == "American Bands") && (chosenCategory != "Tropical Fruits") && (chosenCategory != "Books Of The Bible") && (chosenCategory != "Phrases")) {
         chosenCategory = "American Bands";
-        var chosenWord = d[Math.floor(Math.random() * d.length)];
+        chosenWord = d[Math.floor(Math.random() * d.length)];
         console.log(chosenWord);
     }
 
     if ((chosenCategory == "Phrases") && (chosenCategory != "Tropical Fruits") && (chosenCategory != "Books Of The Bible") && (chosenCategory != "American Bands")) {
         chosenCategory = "Phrases";
-        var chosenWord = b[Math.floor(Math.random() * b.length)];
+        chosenWord = b[Math.floor(Math.random() * b.length)];
         console.log(chosenWord);
-        
+
     }
-    //push chosen word placeholder
-    
+
+    // Create Array of Blanks, spaces, dashes, etc.
     for (var i = 0; i < chosenWord.length; i++) {
         // put them in a string
         if (chosenWord[i] === " ") {
@@ -103,44 +107,95 @@ function Spin() {
             chosenWordPlaceholder.push("_");
         }
     }
-    console.log(chosenWord.length);
-    console.log(chosenWordPlaceholder);
-    console.log(gameOn);
-    
+    console.log("chosenWordLength: " + chosenWord.length);
+    console.log("chosenWordPlaceholder: " + chosenWordPlaceholder);
+    console.log("game on: " + gameOn);
 
-    //Create placeholder for guess word
 
+    // We go through Array of Blanks and place onto HTLM file.
     var placeHolder = document.getElementById("placeholder");
     for (var i = 0; i < chosenWordPlaceholder.length; i++) {
         var wordElement = document.createTextNode(' ');
         wordElement.textContent = chosenWordPlaceholder[i];
         placeHolder.appendChild(wordElement);
-        //placeholder.textContent =wordElement;
     }
-} console.log(chosenWord.length);
+}
+
+console.log(chosenWord.length);
 console.log(chosenWord);
 //}
+
+// chosenWord = "Harry Potter";
+
+// currentGuess = --> grabs input "keyup"
+//
+// for(let i = 0; i < chosenWord.length; i++){
+//
+// }
+
+
 //Match the letters of the guess word
 console.log(gameOn);
 function letterGuess(letter) {
-console.log(letter);
-console.log(chosenWord.length);
-console.log(guessedLetters);
+console.log("current letter: " + letter);
+console.log("chosenWordLength: " + chosenWord.length);
+// console.log(guessedLetters);
     if (gameOn == true && guessedLetters.indexOf(letter) == -1) {
 
+
+      // we get a guess from user.
+        console.log("guessedLetters: " + guessedLetters)
         guessedLetters.push(letter);
+
+        // var hasLetter = false;
+        // if we find user input letter at any spot, change it.
         for (var i = 0; i < chosenWord.length; i++) {
 
+            // go through each chosen word, and check if that letter is equal to user input "k".
             if (chosenWord[i].toLowerCase() === letter.toLowerCase()) {
 
+                // if we find a letter that's changed.
+                // hasLetter = true;
+
+                // replace Array of blanks with chosen letter at index "i".
+                // here we are setting location to user input "k"
                 chosenWordPlaceholder[i] = chosenWord[i];
-                for (var i = 0; i < chosenWordPlaceholder.length; i++) {
-                    var wordElement = document.createTextNode(' ');
-                    wordElement.textContent = chosenWordPlaceholder[i];
-                    placeHolder.appendChild(wordElement);
-                }
+
+                // chosenWordPlaceholder Array
+                //[ "_", "_", "_", "_", "k", "_", "k", "k", "_", ""]
+                // The Lion King
             }
+            //
+            // if (hasLetter === false){
+            //   incorrectLetters.push(letter)
+            // }
         }
+
+        // NOW we can create the new string.
+        var placeHolder = document.getElementById("placeholder");
+        placeholder.innerHTML = "";
+        for (var i = 0; i < chosenWordPlaceholder.length; i++) {
+
+            var wordElement = document.createTextNode(" ");
+            wordElement.textContent = chosenWordPlaceholder[i];
+            placeHolder.appendChild(wordElement);
+
+
+            // <span id="placeholder">______________g</span>
+        }
+        //
+        // var placeHolder = document.getElementById("placeholder");
+        // placeholder.innerHTML = "";
+        // for (var i = 0; i < incorrectLetters.length; i++) {
+        //
+        //     var wordElement = document.createTextNode(" ");
+        //     wordElement.textContent = chosenWordPlaceholder[i];
+        //     placeHolder.appendChild(wordElement);
+        //
+        //
+        //     // <span id="placeholder">______________g</span>
+        // }
+
 
 
 
@@ -163,8 +218,19 @@ document.onkeyup = function (event) {
    if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 65 && event.keyCode <= 90)) {
        letterGuess(event.key);
         gameOn = true;
-        console.log(gameOn);
+        console.log("gameOn "+ gameOn);
     }
 }
 
-//console.log(chosenWordPlaceholder);   
+//console.log(chosenWordPlaceholder);
+
+
+// Game Plan
+/*
+
+
+
+
+
+
+*/
