@@ -152,13 +152,11 @@ function letterGuess(letter) {
             // go through each chosen word, and check if that letter is equal to user input "k".
             if (chosenWord[i].toLowerCase() === letter.toLowerCase()) {
                 // if we find a letter that's changed.
-                 //hasLetter = true;
+                //hasLetter = true;
                 // replace Array of blanks with chosen letter at index "i".
                 // here we are setting location to user input "k"
                 chosenWordPlaceholder[i] = chosenWord[i];
-                // chosenWordPlaceholder Array
-                //[ "_", "_", "_", "_", "k", "_", "k", "k", "_", ""]
-                // The Lion King
+
             }
             //
             //if (hasLetter === false){
@@ -186,45 +184,56 @@ function letterGuess(letter) {
         //    var wordElement = document.createTextNode(" ");
         //    wordElement.textContent = chosenWordPlaceholder[i];
         //    placeHolder.appendChild(wordElement);
-            //
-            //
-            //     // <span id="placeholder">______________g</span>
-            // }
+        //
+        //
+        //     // <span id="placeholder">______________g</span>
+        // }
 
 
 
 
-            // placeHolder.textContent = chosenWordPlaceholder.join[''];
+        // placeHolder.textContent = chosenWordPlaceholder.join[''];
 
-        }
+    }
 
     else {
-            if (!gameOn) {
-                alert("Game is Off! Click Spin to start a new game.");
-            } else {
-                alert("Try a new letter.");
-            }
-            //console.log(letter);
+        if (!gameOn) {
+            alert("Game is Off! Click Spin to start a new game.");
+        } else {
+            alert("Try a new letter.");
         }
+        //console.log(letter);
     }
-    function getIncorrect(letter){
-        console.log(incorrectLetters);
-        if (chosenWordPlaceholder.indexOf(letter.toLowerCase()) === -1 && chosenWordPlaceholder.indexOf(letter.toUpperCase()) === -1) {
-            //decrement guesses
-            guessesLeft --;
-            //push inccorrect letter to incorrect letter array
-            incorrectLetters.push(letter);
+}
+function getIncorrect(letter) {
+    
+    console.log(incorrectLetters);
+    if (chosenWordPlaceholder.indexOf(letter.toLowerCase()) === -1 && chosenWordPlaceholder.indexOf(letter.toUpperCase()) === -1) {
+        //decrement guesses
+        guessesLeft--;
+        //push inccorrect letter to incorrect letter array
+        incorrectLetters.push(letter);
+
+        guessedLetters = document.getElementById("guessed-letters");
+        guessedLetters.innerHTML = "";
+        for (var i = 0; i < incorrectLetters.length; i++) {
+
+            var wordElement = document.createTextNode(" ");
+            wordElement.textContent = incorrectLetters[i];
+            guessedLetters.appendChild(wordElement);
         }
+        guessesLeft.textContent = guessesLeft;
     }
+}
 
 
-    document.onkeyup = function (event) {
-        if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 65 && event.keyCode <= 90)) {
-            letterGuess(event.key);
-            gameOn = true;
-            console.log("gameOn " + gameOn);
-        }
+document.onkeyup = function (event) {
+    if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 65 && event.keyCode <= 90)) {
+        letterGuess(event.key);
+        gameOn = true;
+        console.log("gameOn " + gameOn);
     }
+}
 
 //console.log(chosenWordPlaceholder);
 
